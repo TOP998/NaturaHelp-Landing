@@ -41,6 +41,29 @@
 <body class="font-sans bg-gray-50 text-gray-800">
     <!-- Language detection and settings -->
     <script>
+        const I18N = {
+  en: {
+    hero_title: "Your Personal Health Assistant",
+    hero_sub: "AI-powered health advice tailored just for you"
+  },
+  pl: {
+    hero_title: "Twój osobisty asystent zdrowia",
+    hero_sub: "Porady zdrowotne oparte na sztucznej inteligencji, dopasowane do Ciebie"
+  },
+  ro: {
+    hero_title: "Asistentul tău personal de sănătate",
+    hero_sub: "Sfaturi medicale personalizate, bazate pe inteligență artificială"
+  },
+  bg: {
+    hero_title: "Вашият личен здравен асистент",
+    hero_sub: "Съвети за здраве с изкуствен интелект, съобразени с вас"
+  },
+  es: {
+    hero_title: "Tu asistente personal de salud",
+    hero_sub: "Consejos de salud personalizados con inteligencia artificial"
+  }
+};
+
         // Detect user language and redirect (simplified version)
         document.addEventListener('DOMContentLoaded', function() {
             const userLang = navigator.language || navigator.userLanguage;
@@ -109,12 +132,23 @@
                     <span id="current-lang">English</span>
                     <i class="fas fa-chevron-down ml-2 text-xs"></i>
                 </button>
-                <div class="language-dropdown absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10 hidden">
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">English</a>
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Polish</a>
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Romanian</a>
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Bulgarian</a>
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Spanish</a>
+                <div class="relative language-selector">
+  <button class="flex items-center text-gray-600 hover:text-primary">
+    <i class="fas fa-globe mr-2"></i>
+    <span id="current-lang">English</span>
+    <i class="fas fa-chevron-down ml-2 text-xs"></i>
+  </button>
+
+  <div class="language-dropdown absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10 hidden">
+    <a href="#" data-lang="en" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">English</a>
+    <a href="#" data-lang="pl" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Polish</a>
+    <a href="#" data-lang="ro" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Romanian</a>
+    <a href="#" data-lang="bg" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Bulgarian</a>
+    <a href="#" data-lang="es" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Spanish</a>
+  </div>
+</div>
+
+            
                 </div>
             </div>
         </div>
@@ -125,8 +159,9 @@
         <div class="container mx-auto px-4 py-16 md:py-24">
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Your Personal Health Assistant</h1>
-                    <p class="text-xl mb-8">AI-powered health advice tailored just for you</p>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4" data-i18n="hero_title"></h1>
+<p class="text-xl mb-8" data-i18n="hero_sub"></p>
+
                     
                     <div class="bg-white bg-opacity-20 rounded-lg p-4 mb-6">
                         <div class="flex items-center">
@@ -448,6 +483,110 @@
 <script>
 /* весь JS из моего кода сюда */
 </script>
+    <script>
+// ---- Переводы (дополни своими) ----
+const I18N = {
+  en: {
+    hero_title: "Solve your health issue today",
+    hero_sub: "Personalized recommendation in 2 minutes via Telegram bot.",
+    cta_btn: "Go to Telegram Bot"
+  },
+  pl: {
+    hero_title: "Rozwiąż swój problem zdrowotny już dziś",
+    hero_sub: "Spersonalizowana rekomendacja w 2 minuty w Telegramie.",
+    cta_btn: "Przejdź do bota Telegram"
+  },
+  ro: {
+    hero_title: "Rezolvă-ți problema de sănătate azi",
+    hero_sub: "Recomandare personalizată în 2 minute pe Telegram.",
+    cta_btn: "Mergi la Botul Telegram"
+  },
+  bg: {
+    hero_title: "Решете здравословния си проблем днес",
+    hero_sub: "Персонална препоръка за 2 минути в Telegram.",
+    cta_btn: "Към Telegram бота"
+  },
+  es: {
+    hero_title: "Resuelve tu problema de salud hoy",
+    hero_sub: "Recomendación personalizada en 2 minutos por Telegram.",
+    cta_btn: "Ir al bot de Telegram"
+  }
+};
+
+// ---- Утилиты ----
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+function applyLang(lang){
+  const dict = I18N[lang] || I18N.en;
+  $$("[data-i18n]").forEach(node=>{
+    const key = node.getAttribute("data-i18n");
+    if (dict[key] != null) node.textContent = dict[key];
+  });
+  // подпишем активный язык на кнопке
+  const names = {en:"English",pl:"Polski",ro:"Română",bg:"Български",es:"Español (MX)"};
+  const btn = $("#lang-current");
+  if (btn) btn.textContent = names[lang] || "English";
+  // сохраним выбор
+  localStorage.setItem("lang", lang);
+  // если есть ссылки с метками языка — обнови их здесь при необходимости
+  // пример: document.querySelectorAll("a[data-telegram]").forEach(a=> a.href = "/bot?lang="+lang)
+}
+
+function setLang(lang){
+  if(!I18N[lang]) lang = "en";
+  applyLang(lang);
+}
+
+// ---- Инициализация ----
+(function(){
+  const saved = localStorage.getItem("lang");
+  const fromQuery = new URLSearchParams(location.search).get("lang");
+  const initial = (fromQuery && I18N[fromQuery]) ? fromQuery : (saved || "en");
+  setLang(initial);
+
+  // раскрытие меню
+  const current = $("#lang-current");
+  const menu = $("#lang-menu");
+  if (current && menu){
+    current.addEventListener("click", e=>{
+      e.preventDefault();
+      menu.classList.toggle("hidden");
+    });
+    menu.addEventListener("click", e=>{
+      const btn = e.target.closest("[data-lang]");
+      if (!btn) return;
+      e.preventDefault();
+      const lang = btn.getAttribute("data-lang");
+      setLang(lang);
+      menu.classList.add("hidden");
+    });
+    // клик вне меню — закрыть
+    document.addEventListener("click", e=>{
+      if (!menu.contains(e.target) && e.target !== current){
+        menu.classList.add("hidden");
+      }
+    });
+  }
+})();
+</script>
+    document.addEventListener("DOMContentLoaded", function() {
+  // Определяем язык браузера
+  const userLang = (navigator.language || navigator.userLanguage).slice(0, 2);
+  const lang = I18N[userLang] ? userLang : "en";
+  applyLang(lang);
+
+  // Переключение языка по клику
+  document.querySelectorAll("[data-lang]").forEach(el => {
+    el.addEventListener("click", function(e) {
+      e.preventDefault();
+      const selectedLang = this.getAttribute("data-lang");
+      applyLang(selectedLang);
+    });
+  });
+});
+
+
 </body>
 </html>
 
