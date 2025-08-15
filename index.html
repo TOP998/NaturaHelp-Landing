@@ -370,7 +370,7 @@
                 <div class="mt-8 bg-white bg-opacity-20 rounded-lg p-4 inline-block">
                     <div class="flex items-center justify-center">
                         <i class="fas fa-clock mr-2"></i>
-                        <span>Offer expires in <span class="font-bold">22:59:59</span></span>
+                        <span>Offer expires in <span id="countdown" class="font-bold"></span></span>
                     </div>
                 </div>
             </div>
@@ -426,4 +426,20 @@
         </a>
     </div>
 </body>
+    <script>
+const DURATION_MIN=15; // длительность в минутах
+const EL=document.getElementById("countdown");
+let end=Date.now()+DURATION_MIN*60*1000, tmr;
+function pad(n){return (n<10?"0":"")+n}
+function tick(){
+  const t=end-Date.now();
+  if(t<=0){EL.textContent="00:00"; clearInterval(tmr); return}
+  const m=Math.floor(t/60000), s=Math.floor((t%60000)/1000);
+  EL.textContent=`${pad(m)}:${pad(s)}`
+}
+tmr=setInterval(tick,1000); tick();
+</script>
+</body>
+</html>
+
 </html>
