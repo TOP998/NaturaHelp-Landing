@@ -41,28 +41,44 @@
 <body class="font-sans bg-gray-50 text-gray-800">
     <!-- Language detection and settings -->
     <script>
-        const I18N = {
+   const I18N = {
   en: {
     hero_title: "Your Personal Health Assistant",
-    hero_sub: "AI-powered health advice tailored just for you"
+    hero_sub: "AI-powered health advice tailored just for you",
+    cta_btn: "Go to Telegram Bot",
+    today_label: "Today",
+    free_consult: "FREE consultation!"
   },
   pl: {
     hero_title: "Twój osobisty asystent zdrowia",
-    hero_sub: "Porady zdrowotne oparte na sztucznej inteligencji, dopasowane do Ciebie"
+    hero_sub: "Porady zdrowotne oparte na sztucznej inteligencji, dopasowane do Ciebie",
+    cta_btn: "Przejdź do bota Telegram",
+    today_label: "Dziś",
+    free_consult: "Bezpłatna konsultacja!"
   },
   ro: {
     hero_title: "Asistentul tău personal de sănătate",
-    hero_sub: "Sfaturi medicale personalizate, bazate pe inteligență artificială"
+    hero_sub: "Sfaturi medicale personalizate, bazate pe inteligență artificială",
+    cta_btn: "Mergi la Botul Telegram",
+    today_label: "Astăzi",
+    free_consult: "Consultație GRATUITĂ!"
   },
   bg: {
     hero_title: "Вашият личен здравен асистент",
-    hero_sub: "Съвети за здраве с изкуствен интелект, съобразени с вас"
+    hero_sub: "Съвети за здраве с изкуствен интелект, съобразени с вас",
+    cta_btn: "Към Telegram бота",
+    today_label: "Днес",
+    free_consult: "Безплатна консултация!"
   },
   es: {
     hero_title: "Tu asistente personal de salud",
-    hero_sub: "Consejos de salud personalizados con inteligencia artificial"
+    hero_sub: "Consejos de salud personalizados con inteligencia artificial",
+    cta_btn: "Ir al bot de Telegram",
+    today_label: "Hoy",
+    free_consult: "¡Consulta GRATIS!"
   }
 };
+
 
         // Detect user language and redirect (simplified version)
         document.addEventListener('DOMContentLoaded', function() {
@@ -168,12 +184,27 @@
 
     <!-- Hero section -->
     <section class="hero-gradient text-white">
-        <div class="container mx-auto px-4 py-16 md:py-24">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4" data-i18n="hero_title"></h1>
-<p class="text-xl mb-8" data-i18n="hero_sub"></p>
-<a class="btn" data-i18n="cta_btn"></a>
+  <div class="container mx-auto px-4 py-16 md:py-24">
+    <div class="flex flex-col md:flex-row items-center">
+      <div class="md:w-1/2 md:mb-10 md:mb-0 md:pr-10">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4" data-i18n="hero_title"></h1>
+        <p class="text-xl mb-8" data-i18n="hero_sub"></p>
+        <a class="btn" data-i18n="cta_btn"></a>
+      </div>
+    </div>
+
+    <div class="bg-white bg-opacity-20 rounded-lg p-4 mb-6">
+      <div class="flex items-center">
+        <div class="bg-yellow-400 text-yellow-800 rounded-full w-8 h-8 flex items-center justify-center">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <span class="font-bold" id="today-date" data-i18n="today_label"></span>
+        <span class="ml-2" data-i18n="free_consult"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
                     
@@ -585,119 +616,52 @@ function setLang(lang){
 })();
 </script>
  <script>
-// === Переводы ===
-const I18N = {
-  en:{hero_title:"Your Personal Health Assistant",hero_sub:"AI-powered health advice tailored just for you",cta_btn:"Go to Telegram Bot"},
-  pl:{hero_title:"Twój osobisty asystent zdrowia",hero_sub:"Porady zdrowotne oparte na sztucznej inteligencji, dopasowane do Ciebie",cta_btn:"Przejdź do bota Telegram"},
-  ro:{hero_title:"Asistentul tău personal de sănătate",hero_sub:"Sfaturi medicale personalizate, bazate pe inteligență artificială",cta_btn:"Mergi la Botul Telegram"},
-  bg:{hero_title:"Вашият личен здравен асистент",hero_sub:"Съвети за здраве с изкуствен интелект, съобразени с вас",cta_btn:"Към Telegram бота"},
-  es:{hero_title:"Tu asistente personal de salud",hero_sub:"Consejos de salud personalizados con inteligencia artificial",cta_btn:"Ir al bot de Telegram"}
-};
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
 
-(function(){
-  const $ = s=>document.querySelector(s);
-  const $$ = s=>document.querySelectorAll(s);
-
-  function applyLang(lang){
-    const dict = I18N[lang] || I18N.en;
-    $$("[data-i18n]").forEach(el=>{
-      const key = el.getAttribute("data-i18n");
-      if(dict[key]!=null) el.textContent = dict[key];
-    });
-    const current = $("#current-lang");
-    if(current){
-      const link = document.querySelector(`[data-lang="${lang}"]`);
-      current.textContent = link? link.textContent : "English";
-    }
-    localStorage.setItem("lang", lang);
+function applyLang(lang){
+  const dict = I18N[lang] || I18N.en;
+  $$("[data-i18n]").forEach(el=>{
+    const key = el.getAttribute("data-i18n");
+    if(dict[key] != null) el.textContent = dict[key];
+  });
+  const current = $("#current-lang");
+  if (current){
+    const link = document.querySelector(`[data-lang="${lang}"]`);
+    current.textContent = link ? link.textContent : "English";
   }
+  localStorage.setItem("lang", lang);
+}
 
-  // Инициализация
+document.addEventListener("DOMContentLoaded", function(){
   const saved = localStorage.getItem("lang");
-  const browser = (navigator.language||navigator.userLanguage||"en").slice(0,2);
-  const initial = I18N[saved]?saved : (I18N[browser]?browser:"en");
+  const browser = (navigator.language || navigator.userLanguage || "en").slice(0,2);
+  const initial = I18N[saved] ? saved : (I18N[browser] ? browser : "en");
   applyLang(initial);
 
-  // Открытие/закрытие меню
+  // Меню
   const toggle = $("#lang-toggle"), menu = $("#lang-menu");
   if(toggle && menu){
-    toggle.addEventListener("click",(e)=>{e.preventDefault();menu.classList.toggle("hidden");});
-    document.addEventListener("click",(e)=>{
-      if(!menu.contains(e.target) && e.target!==toggle && !toggle.contains(e.target)){
+    toggle.addEventListener("click", e=>{
+      e.preventDefault();
+      menu.classList.toggle("hidden");
+    });
+    document.addEventListener("click", e=>{
+      if (!menu.contains(e.target) && !toggle.contains(e.target)){
         menu.classList.add("hidden");
       }
     });
-    // Делегирование кликов по пунктам
-    menu.addEventListener("click",(e)=>{
+    menu.addEventListener("click", e=>{
       const a = e.target.closest("[data-lang]");
-      if(!a) return;
+      if (!a) return;
       e.preventDefault();
       applyLang(a.getAttribute("data-lang"));
       menu.classList.add("hidden");
     });
   }
-
-  // Для отладки:
-  // console.log("Lang init:", initial);
-})();
+});
 </script>
- <script>
-// === Переводы ===
-const I18N = {
-  en:{hero_title:"Your Personal Health Assistant",hero_sub:"AI-powered health advice tailored just for you",cta_btn:"Go to Telegram Bot"},
-  pl:{hero_title:"Twój osobisty asystent zdrowia",hero_sub:"Porady zdrowotne oparte na sztucznej inteligencji, dopasowane do Ciebie",cta_btn:"Przejdź do bota Telegram"},
-  ro:{hero_title:"Asistentul tău personal de sănătate",hero_sub:"Sfaturi medicale personalizate, bazate pe inteligență artificială",cta_btn:"Mergi la Botul Telegram"},
-  bg:{hero_title:"Вашият личен здравен асистент",hero_sub:"Съвети за здраве с изкуствен интелект, съобразени с вас",cta_btn:"Към Telegram бота"},
-  es:{hero_title:"Tu asistente personal de salud",hero_sub:"Consejos de salud personalizados con inteligencia artificial",cta_btn:"Ir al bot de Telegram"}
-};
 
-(function(){
-  const $ = s=>document.querySelector(s);
-  const $$ = s=>document.querySelectorAll(s);
-
-  function applyLang(lang){
-    const dict = I18N[lang] || I18N.en;
-    $$("[data-i18n]").forEach(el=>{
-      const key = el.getAttribute("data-i18n");
-      if(dict[key]!=null) el.textContent = dict[key];
-    });
-    const current = $("#current-lang");
-    if(current){
-      const link = document.querySelector(`[data-lang="${lang}"]`);
-      current.textContent = link? link.textContent : "English";
-    }
-    localStorage.setItem("lang", lang);
-  }
-
-  // Инициализация
-  const saved = localStorage.getItem("lang");
-  const browser = (navigator.language||navigator.userLanguage||"en").slice(0,2);
-  const initial = I18N[saved]?saved : (I18N[browser]?browser:"en");
-  applyLang(initial);
-
-  // Открытие/закрытие меню
-  const toggle = $("#lang-toggle"), menu = $("#lang-menu");
-  if(toggle && menu){
-    toggle.addEventListener("click",(e)=>{e.preventDefault();menu.classList.toggle("hidden");});
-    document.addEventListener("click",(e)=>{
-      if(!menu.contains(e.target) && e.target!==toggle && !toggle.contains(e.target)){
-        menu.classList.add("hidden");
-      }
-    });
-    // Делегирование кликов по пунктам
-    menu.addEventListener("click",(e)=>{
-      const a = e.target.closest("[data-lang]");
-      if(!a) return;
-      e.preventDefault();
-      applyLang(a.getAttribute("data-lang"));
-      menu.classList.add("hidden");
-    });
-  }
-
-  // Для отладки:
-  // console.log("Lang init:", initial);
-})();
-</script>
   
     
 </body>
