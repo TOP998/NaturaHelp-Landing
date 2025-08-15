@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaturaHelp - Your Personal Health Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#1E293B',
+                        light: '#F8FAFC',
+                        accent: '#EC4899',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #3B82F6 0%, #10B981 100%);
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .language-selector:hover .language-dropdown {
+            display: block;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-800">
+    <!-- Language detection and settings -->
+    <script>
+        // Detect user language and redirect (simplified version)
+        document.addEventListener('DOMContentLoaded', function() {
+            const userLang = navigator.language || navigator.userLanguage;
+            const geoLangMap = {
+                'pl': 'Polish',
+                'ro': 'Romanian',
+                'bg': 'Bulgarian',
+                'es': 'Spanish'
+            };
+            
+            // Default to English
+            let displayLang = 'English';
+            let displayTexts = {
+                title: "NaturaHelp - Your Personal Health Assistant",
+                subtitle: "AI-powered health advice tailored just for you",
+                cta: "Get Your Personalized Solution Now",
+                feature1: "24/7 Health Support",
+                feature2: "Personalized Recommendations",
+                feature3: "Doctor-Approved Advice",
+                testimonial: "This bot helped me identify my allergy triggers when doctors couldn't!",
+                doctorTitle: "Meet Our Medical Team",
+                guarantee: "100% Privacy Guaranteed",
+                offer: "Only today - FREE consultation!",
+                button: "Go to Telegram Bot",
+                stepsTitle: "How It Works",
+                step1: "Start chat with bot",
+                step2: "Answer quick questions",
+                step3: "Get personalized advice",
+                footer: "Your health matters - take control today"
+            };
+            
+            // Check if detected language is in our supported list
+            const langCode = userLang.substring(0, 2).toLowerCase();
+            if (geoLangMap[langCode]) {
+                displayLang = geoLangMap[langCode];
+                // In a real scenario, we would load translations here
+                console.log(`Detected ${displayLang} language`);
+            }
+            
+            // Update language display
+            document.getElementById('current-lang').textContent = displayLang;
+            
+            // Set today's date for the offer
+            const today = new Date();
+            document.getElementById('today-date').textContent = today.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        });
+    </script>
+
+    <!-- Header with language selector -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center mr-3">
+                    <i class="fas fa-heartbeat text-white text-xl"></i>
+                </div>
+                <span class="text-xl font-bold text-primary">NaturaHelp</span>
+            </div>
+            
+            <div class="relative language-selector">
+                <button class="flex items-center text-gray-600 hover:text-primary">
+                    <i class="fas fa-globe mr-2"></i>
+                    <span id="current-lang">English</span>
+                    <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                </button>
+                <div class="language-dropdown absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10 hidden">
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">English</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Polish</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Romanian</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Bulgarian</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Spanish</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero section -->
+    <section class="hero-gradient text-white">
+        <div class="container mx-auto px-4 py-16 md:py-24">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Your Personal Health Assistant</h1>
+                    <p class="text-xl mb-8">AI-powered health advice tailored just for you</p>
+                    
+                    <div class="bg-white bg-opacity-20 rounded-lg p-4 mb-6">
+                        <div class="flex items-center">
+                            <div class="bg-yellow-400 text-yellow-800 rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <span class="font-bold" id="today-date">Today</span>
+                            <span class="ml-2">- FREE consultation!</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://t.me/yourhealthbot" class="pulse-animation inline-block bg-white text-primary font-bold py-4 px-8 rounded-full text-lg hover:bg-gray-100 transition duration-300 shadow-lg">
+                        Get Your Personalized Solution Now <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                    
+                    <div class="mt-6 flex items-center">
+                        <div class="flex -space-x-2">
+                            <img class="w-10 h-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/32.jpg" alt="User">
+                            <img class="w-10 h-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/75.jpg" alt="User">
+                            <img class="w-10 h-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/63.jpg" alt="User">
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium">Trusted by <span class="font-bold">10,000+</span> users</p>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="text-white ml-2">4.9/5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 relative">
+                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-2 inline-block">
+                        <img src="https://via.placeholder.com/400x700/3B82F6/FFFFFF?text=Telegram+Bot+Preview" alt="Bot Preview" class="rounded-xl shadow-2xl max-h-[500px]">
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 bg-white rounded-full p-4 shadow-lg hidden md:block">
+                        <div class="bg-green-500 text-white rounded-full w-16 h-16 flex items-center justify-center">
+                            <i class="fas fa-comment-medical text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark mb-4">Why Choose Our NaturaHelp?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Get professional health guidance anytime, anywhere through Telegram</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-xl hover:shadow-lg transition duration-300">
+                    <div class="w-14 h-14 bg-blue-100 text-primary rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-clock text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">24/7 Health Support</h3>
+                    <p class="text-gray-600">Get answers to your health questions anytime, day or night, without waiting rooms.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-xl hover:shadow-lg transition duration-300">
+                    <div class="w-14 h-14 bg-green-100 text-secondary rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-user-md text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Personalized Recommendations</h3>
+                    <p class="text-gray-600">Our AI analyzes your symptoms and history to provide tailored health advice.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-xl hover:shadow-lg transition duration-300">
+                    <div class="w-14 h-14 bg-purple-100 text-accent rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Doctor-Approved Advice</h3>
+                    <p class="text-gray-600">All recommendations are verified by our team of licensed medical professionals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark mb-4">How It Works</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Get personalized health advice in just 3 simple steps</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="mx-auto w-20 h-20 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">1</div>
+                    <h3 class="text-xl font-bold mb-3">Start chat with bot</h3>
+                    <p class="text-gray-600">Open our Telegram bot and begin your consultation</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="mx-auto w-20 h-20 bg-secondary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">2</div>
+                    <h3 class="text-xl font-bold mb-3">Answer quick questions</h3>
+                    <p class="text-gray-600">Provide details about your symptoms and health history</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="mx-auto w-20 h-20 bg-accent text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">3</div>
+                    <h3 class="text-xl font-bold mb-3">Get personalized advice</h3>
+                    <p class="text-gray-600">Receive immediate recommendations based on your inputs</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <a href="https://t.me/yourhealthbot" class="inline-block bg-primary hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full text-lg transition duration-300 shadow-lg">
+                    Go to Telegram Bot <i class="fas fa-paper-plane ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark mb-4">What Our Users Say</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Real people, real results</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gray-50 p-8 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <img class="w-12 h-12 rounded-full mr-4" src="https://randomuser.me/api/portraits/women/44.jpg" alt="User">
+                        <div>
+                            <h4 class="font-bold">Anna K.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 italic">"This bot helped me identify my allergy triggers when doctors couldn't! The personalized recommendations were spot on and saved me months of trial and error."</p>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <img class="w-12 h-12 rounded-full mr-4" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+                        <div>
+                            <h4 class="font-bold">Mark T.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 italic">"As someone who travels frequently, having 24/7 access to health advice in my native language has been a game-changer. The bot understood my symptoms perfectly."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Medical team -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark mb-4">Meet Our Medical Team</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Our AI recommendations are supervised by licensed professionals</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" src="https://randomuser.me/api/portraits/women/65.jpg" alt="Doctor">
+                    <h3 class="font-bold text-lg">Dr. Sarah Johnson</h3>
+                    <p class="text-gray-600 mb-2">General Practitioner</p>
+                    <p class="text-sm text-gray-500">15 years experience</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" src="https://randomuser.me/api/portraits/men/42.jpg" alt="Doctor">
+                    <h3 class="font-bold text-lg">Dr. Michael Chen</h3>
+                    <p class="text-gray-600 mb-2">Cardiologist</p>
+                    <p class="text-sm text-gray-500">12 years experience</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" src="https://randomuser.me/api/portraits/women/33.jpg" alt="Doctor">
+                    <h3 class="font-bold text-lg">Dr. Emily Wilson</h3>
+                    <p class="text-gray-600 mb-2">Pediatrician</p>
+                    <p class="text-sm text-gray-500">10 years experience</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Doctor">
+                    <h3 class="font-bold text-lg">Dr. David Martinez</h3>
+                    <p class="text-gray-600 mb-2">Neurologist</p>
+                    <p class="text-sm text-gray-500">18 years experience</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantee -->
+    <section class="py-16 bg-primary text-white">
+        <div class="container mx-auto px-4 text-center">
+            <div class="max-w-3xl mx-auto">
+                <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-lock text-3xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">100% Privacy Guaranteed</h2>
+                <p class="text-xl mb-8">Your health data is encrypted and never shared with third parties. We comply with all medical privacy regulations.</p>
+                <a href="https://t.me/yourhealthbot" class="inline-block bg-white text-primary font-bold py-4 px-8 rounded-full text-lg hover:bg-gray-100 transition duration-300 shadow-lg">
+                    Get Secure Help Now <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 text-center text-white">
+                <h2 class="text-3xl font-bold mb-4">Only Today - FREE Consultation!</h2>
+                <p class="text-xl mb-8">Start your personalized health assessment now at no cost. This offer expires soon!</p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="https://t.me/yourhealthbot" class="flex-1 max-w-md bg-white text-primary font-bold py-4 px-8 rounded-full text-lg hover:bg-gray-100 transition duration-300 shadow-lg text-center">
+                        Get a personalized solution <i class="fas fa-bolt ml-2"></i>
+                    </a>
+                    
+                    <a href="https://t.me/yourhealthbot" class="flex-1 max-w-md bg-transparent border-2 border-white font-bold py-4 px-8 rounded-full text-lg hover:bg-white hover:bg-opacity-20 transition duration-300 text-center">
+                        Go to Telegram Bot <i class="fas fa-paper-plane ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="mt-8 bg-white bg-opacity-20 rounded-lg p-4 inline-block">
+                    <div class="flex items-center justify-center">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span>Offer expires in <span class="font-bold">23:59:59</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center mr-3">
+                            <i class="fas fa-heartbeat text-white text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold">HealthBot</span>
+                    </div>
+                    <p class="mt-4 text-gray-400 max-w-md">Your personal health assistant available 24/7 through Telegram.</p>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-8">
+                    <div>
+                        <h3 class="font-bold mb-4">Quick Links</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Home</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold mb-4">Contact</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-2"></i> support@healthbot.com</li>
+                            <li class="flex items-center text-gray-400"><i class="fab fa-telegram mr-2"></i> @healthbotsupport</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>© 2023 HealthBot. All rights reserved.</p>
+                <p class="mt-2 text-sm">Disclaimer: This bot provides health information, not medical diagnosis or treatment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating CTA for mobile -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4 z-50">
+        <a href="https://t.me/yourhealthbot" class="block bg-primary hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full text-center transition duration-300 shadow-lg">
+            Get a personalized solution <i class="fas fa-bolt ml-2"></i>
+        </a>
+    </div>
+</body>
+</html>
